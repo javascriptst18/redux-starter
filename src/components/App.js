@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import TodoList from './TodoList';
 
 class App extends Component {
 
@@ -10,8 +11,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <p>{this.props.counter}</p>
-        <button onClick={this.increment}> Increment </button>
+        <TodoList />
       </div>
     );
   }
