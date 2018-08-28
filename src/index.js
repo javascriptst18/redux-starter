@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import App from './components/App';
-import { ADD_TODO } from './constants';
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO, LIST_TODOS, INCREMENT, DECREMENT } from './constants';
 
 /**
  * @param {number} state state is always the previous state
@@ -12,15 +13,10 @@ import { ADD_TODO } from './constants';
  */
 function counter(state = 0, action) {
   switch (action.type) {
-    case 'INCREMENT':
+    case INCREMENT:
       return state + 1;
-    case 'DECREMENT':
+    case DECREMENT:
       return state - 1;
-    case 'INCREMENT_BY_5':
-      return state + 5;
-    case 'INCREMENT_BY_ANYTHING':
-      return state + action.value;
-    // If no case is matched, just return the previous state, do not update this state
     default:
       return state;
   }
@@ -28,7 +24,7 @@ function counter(state = 0, action) {
 
 function todos(state = [], action) {
   switch (action.type) {
-    case 'LIST_ALL_TODOS':
+    case LIST_TODOS:
       return state;
     // replace 'ADD_TODO' with variable
     case ADD_TODO:
@@ -40,9 +36,18 @@ function todos(state = [], action) {
       const copy = [...state];
       copy.push(action.todo);
       return copy;
-    case 'REMOVE_TODO':
+    case REMOVE_TODO:
       return state.filter(item => item.id !== action.todo.id);
     // If no case is matched, just return the previous state, do not update this state
+    default:
+      return state;
+  }
+}
+
+function asyncData(state = {}, action){
+  switch(action.type){
+    case 'FETCHED_DATA':
+      return action.data;
     default:
       return state;
   }
@@ -54,7 +59,7 @@ function todos(state = [], action) {
  * the redux-library called 'combineReducers'. combineReducers takes an object
  * as argument where you send along your reducers.
  */
-const rootReducer = combineReducers({ counter, todos });
+const rootReducer = combineReducers({ counter, todos, asyncData });
 
 /**
  * Then create the store by sending the combined reducers to the 'createStore'-function
@@ -62,7 +67,8 @@ const rootReducer = combineReducers({ counter, todos });
  */
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk), //! applyMiddleware must be last!!!!
 );
 
 ReactDOM.render(

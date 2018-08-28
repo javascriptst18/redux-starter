@@ -4,7 +4,7 @@
  * if the variable is nonexistent, we get an error. If the
  * string is misspelled, we know where to change it.
  */
-import { ADD_TODO } from './constants';
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO, LIST_TODOS, INCREMENT, DECREMENT } from './constants';
 
 /**
  * Action creator
@@ -18,5 +18,48 @@ export function addTodo(todo) {
   return {
     type: ADD_TODO,
     todo
+  }
+}
+
+export function removeTodo(todo) {
+  return {
+    type: REMOVE_TODO,
+    todo
+  }
+}
+
+export function updateTodo(todo) {
+  return {
+    type: UPDATE_TODO,
+    todo
+  }
+}
+
+export function listTodos(todos) {
+  return {
+    type: LIST_TODOS,
+    todos
+  }
+}
+
+export function incrementCounter(){
+  return {
+    type: INCREMENT
+  }
+}
+
+export function decrement() {
+  return {
+    type: DECREMENT
+  }
+}
+
+export function fetchData(){
+  return function(dispatch){
+    return fetch('https://www.boredapi.com/api/activity')
+      .then(response => response.json())
+      .then(data => {
+        dispatch({ type: 'FETCHED_DATA', data });
+      })
   }
 }

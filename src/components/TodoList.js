@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 /**
  * Import addTodo in whatever component we want to use it
  */
-import { addTodo } from '../actions';
+import { addTodo, fetchData } from '../actions';
 
 class TodoList extends Component {
   
   state = {
     todo: ''
+  }
+
+  componentDidMount(){
+    this.props.dispatch(fetchData());
   }
 
   onChange = e => this.setState({ todo: e.target.value })
