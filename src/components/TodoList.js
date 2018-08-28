@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-/**
- * Import addTodo in whatever component we want to use it
- */
 import { addTodo, fetchData } from '../actions';
 
 class TodoList extends Component {
   
   state = {
     todo: ''
-  }
-
-  componentDidMount(){
-    this.props.dispatch(fetchData());
   }
 
   onChange = e => this.setState({ todo: e.target.value })
@@ -23,7 +16,7 @@ class TodoList extends Component {
       id: 2
     }
     // Replace action with action creator
-    this.props.dispatch(addTodo(todo));
+    this.props.addTodo(todo);
   }
 
   render() {
@@ -48,4 +41,16 @@ class TodoList extends Component {
   }
 }
 
-export default connect(state => state)(TodoList);
+function mapStateToProps(state) {
+  return {
+    todos: state.todos
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addTodo: (todo) => dispatch(addTodo(todo))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

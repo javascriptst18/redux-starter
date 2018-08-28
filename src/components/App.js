@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TodoList from './TodoList';
+import BoredComponent from './BoredComponent';
 
 function increment(previousState) {
   return {
@@ -20,7 +21,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <TodoList />
+        {/* <TodoList /> */}
+        <BoredComponent />
       </div>
     );
   }
