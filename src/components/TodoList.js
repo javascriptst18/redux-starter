@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+/**
+ * Import addTodo in whatever component we want to use it
+ */
 import { addTodo } from '../actions';
 
 class TodoList extends Component {

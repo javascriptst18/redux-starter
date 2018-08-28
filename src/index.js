@@ -30,6 +30,7 @@ function todos(state = [], action) {
   switch (action.type) {
     case 'LIST_ALL_TODOS':
       return state;
+    // replace 'ADD_TODO' with variable
     case ADD_TODO:
       /**
       * 'state' is all current todos, we must make a copy of that
