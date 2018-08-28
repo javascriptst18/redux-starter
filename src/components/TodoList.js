@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addTodo } from '../actions';
 
 class TodoList extends Component {
   
@@ -14,7 +15,8 @@ class TodoList extends Component {
       text: this.state.todo,
       id: 2
     }
-    this.props.dispatch({ type: 'ADD_TODO', todo })
+    // Replace action with action creator
+    this.props.dispatch(addTodo(todo));
   }
 
   render() {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import App from './components/App';
+import { ADD_TODO } from './constants';
 
 /**
  * @param {number} state state is always the previous state
@@ -29,7 +30,7 @@ function todos(state = [], action) {
   switch (action.type) {
     case 'LIST_ALL_TODOS':
       return state;
-    case 'ADD_TODO':
+    case ADD_TODO:
       /**
       * 'state' is all current todos, we must make a copy of that
       * state and push the new value into that array. action.todo is

@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TodoList from './TodoList';
 
+function increment(previousState) {
+  return {
+    counter: previousState + 1
+  }
+}
+
 class App extends Component {
 
+  state = {
+    counter: 0 
+  }
+
   increment = () => {
-    this.props.dispatch({ type: 'INCREMENT' });
+    this.setState(increment)
   }
 
   render() {
@@ -17,5 +27,4 @@ class App extends Component {
   }
 }
 
-// Puts all of my state into props
-export default connect(state => state)(App);
+export default App;
